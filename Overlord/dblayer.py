@@ -63,10 +63,14 @@ class DBlayer(object):
             try:
 
                 # add entity to the database
-                new['hours'] = 0
-                new['last'] = str(strftime("%Y-%m-%d %H:%M:%S"))
-                new['rit-data'] = None##maybe find a way to get rit data
-                new['here'] = False
+                if not 'hours' in new:
+                    new['hours'] = 0
+                if not 'last' in new:
+                    new['last'] = str(strftime("%Y-%m-%d %H:%M:%S"))
+                if not 'rit-data' in new:
+                    new['rit-data'] = None##maybe find a way to get rit data
+                if not 'here' in new:
+                    new['here'] = False
                 self.users.insert(new)
                 success = True
 

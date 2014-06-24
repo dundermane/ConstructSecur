@@ -11,7 +11,7 @@
 
 import os
 import datetime
-from flask import Flask, jsonify, render_template, request, redirect
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from dblayer import DBlayer
 
 db = DBlayer(DEBUG=True)
@@ -59,6 +59,30 @@ def machines():
     machines = db.readAllMachines()
     return render_template('machines.html',listManage=machines,categories=categories)
     
+@app.route('/addUser',methods=['POST'])
+def add_user():
+    new = {}
+    name = request.form['name']
+    new['name'] = name
+    ident = request.form['ident']
+    new['ident'] = ident
+    userclass = request.form['class']
+    new['class'] = userclass
+    try:
+        hours = request.form['hours']
+        new['hours'] = hours
+    except:
+        print 'no hours in form'
+    try:
+        last = request.form['last']
+        new['last'] = last
+    except:
+        print 'no last in form'
+    print new
+    added = db.addUser(new,'1337hax')
+    print url_for('users')
+    return redirect(url_for('users'))
+  
 @app.route("/remove<string:index>")
 def remove(index):
     print index

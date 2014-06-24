@@ -19,11 +19,11 @@
 </tr>
 {% endfor %}
 <tr>
-<form name="editDoc">
+<form action="{{ url_for('add_user') }}" method="post">
 {% for cat in categories %}
-	<td><input name={{ cat }} type="text"></input></td>
+	<td><input name="{{ cat }}" type="text"></input></td>
 {% endfor %}
-<td><a href="">Save</a></td>
+<td><input type="submit" value="Save"></td>
 </form>
 </tr>
 </table>
