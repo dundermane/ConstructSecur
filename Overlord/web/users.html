@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+
+{% block body %}
+<br>
+
+<table>
+<tr>
+{% for cat in categories %}
+<td>{{ cat }}</td>
+{% endfor %}
+</tr>
+
+{% for user in users %}
+<tr>
+{% for cat in categories %}
+<td>{{ user[cat] }}</td>
+{% endfor %}
+<td><a href="remove{{ user['_id'] }}">Remove</a></td>
+</tr>
+{% endfor %}
+<tr>
+<form name="editDoc">
+{% for cat in categories %}
+	<td><input name={{ cat }} type="text"></input></td>
+{% endfor %}
+<td><a href="">Save</a></td>
+</form>
+</tr>
+</table>
+<div id="editDoc">
+</div>
+<a href="/newUser" id="newUserButton">Add New</a>
+</div>
+{% endblock %}
+
+<script type="text/javascript">
+var elem = document.getElementById("mytext");
+elem.value = "My default value";
+</script>

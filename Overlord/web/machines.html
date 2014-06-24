@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block body %}
+<br>
+
+<table>
+<tr>
+{% for cat in categories %}
+<td>{{ cat }}</td>
+{% endfor %}
+</tr>
+
+{% for machine in machines %}
+<tr>
+{% for cat in categories %}
+<td>{{ machine.cat }}</td>
+{% endfor %}
+<td><a href="">Edit</a></td>
+<td><a href="">Remove</a></td>
+</tr>
+{% endfor %}
+</table>
+
+</div>
+{% endblock %}

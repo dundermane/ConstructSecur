@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Airlock Control</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+	<div id="container">
+			<h1>Airlock Control</h1>
+			<ul id="nav">
+				<li><a href="/logs">Logs</a></li>
+				<li><a href="/users">Users</a></li>
+				<li><a href="/machines">Machines</a></li>
+			</ul>
+{% block body %}{% endblock %}
+
+		<footer class="notMobile">
+			Construct Security System | 2014
+		</footer>
+	</div>
+</body>

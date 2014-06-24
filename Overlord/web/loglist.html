@@ -1,0 +1,13 @@
+{% extends "main.html" %}
+
+{% block body %}
+<br>
+<ul id="logHistory">
+{% for log in logList %}
+<li><a href={{ log.path }}>{{ log.name }}</a></li>
+{% endfor %}
+</ul>
+</div>
+<script src="js/logs.js"></script>
+
+{% endblock %}
