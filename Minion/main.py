@@ -1,47 +1,26 @@
 #!/usr/bin/env python 
+import time
+from minionWeb import webMinion
 
 
-#Init Pins
-######
+def swipe():
+    return 'neo'
 
+#Init some Pins
+##########
 
+while True:
+    addr = '127.0.0.1:5000'
+    minion = webMinion(addr, DEBUG=True)
+    try:
+        print minion.timeout
+        print minion.classes
+    except:
+        print 'Couldnt find the server'
 
-#Init Connection
-######
-import httplib, urllib
+    ident = swipe()
+    minion.getUser(ident)
 
-params = urllib.urlencode({
-    'isbn' : '9780131185838',
-    'catalogId' : '10001',
-    'schoolStoreId' : '15828',
-    'search' : 'Search'
-    })
-headers = {"Content-type": "application/x-www-form-urlencoded",
-           "Accept": "text/plain"}
-conn = httplib.HTTPConnection("bkstr.com:80")
-conn.request("POST", "/webapp/wcs/stores/servlet/BuybackSearch",
-             params, headers)
-response = conn.getresponse()
-print response.status, response.reason
-data = response.read()
-conn.close()
+    minion.close()
+    time.sleep(5)
 
-
-#Running Loop
-#######
-
-while (off button == False){
-
-check connection
-
-if(pollrfid == True){
-
-	try:
-		success = sendRFIDtoserver(RFID)
-	except:
-		print "Network Error"
-		
-
-}
-
-}

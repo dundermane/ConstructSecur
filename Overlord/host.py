@@ -1,12 +1,8 @@
 ##TODO:
 #
 #getLog(day) FInish it
-#machines list
-#users list
 #machines new
 #machines mod
-#users new
-#users mod
 #
 
 import os
@@ -52,13 +48,6 @@ def users():
     users = db.readAllUsers()
     return render_template('users.html',users=users,categories=categories)
     
-    
-@app.route("/machines")
-def machines():
-    categories = ['name','ident','classes']
-    machines = db.readAllMachines()
-    return render_template('machines.html',listManage=machines,categories=categories)
-    
 @app.route('/addUser',methods=['POST'])
 def add_user():
     new = {}
@@ -78,10 +67,47 @@ def add_user():
         new['last'] = last
     except:
         print 'no last in form'
-    print new
     added = db.addUser(new,'1337hax')
-    print url_for('users')
     return redirect(url_for('users'))
+    
+@app.route('/user-class',methods=['POST'])
+def user_class():
+    ident = request.form['ident']
+    userClass = db.readUser(ident)['class']
+    print "user class is {0}".format(userClass)
+    return jsonify(userClass=userClass)
+  
+@app.route("/machines")
+def machines():
+    categories = ['name','ident','classes','timeout']
+    machines = db.readAllMachines()
+    return render_template('machines.html',machines=machines,categories=categories)
+
+@app.route('/addMachine',methods=['POST'])
+def add_machine():
+    new = {}
+    name = request.form['name']
+    new['name'] = name
+    ident = request.form['ident']
+    new['ident'] = ident
+    classes = request.form['classes'].split(',')
+    classes = [n.strip(' ') for n in classes]#Strip whitespace from classes
+    new['classes'] = classes
+    timeout = request.form['timeout']
+    new['timeout'] = timeout
+    try:
+        hours = request.form['hours']
+        new['hours'] = hours
+    except:
+        print 'no hours in form'
+    try:
+        last = request.form['last']
+        new['last'] = last
+    except:
+        print 'no last in form'
+    print new
+    added = db.addMachine(new,'1337hax')
+    return redirect(url_for('machines'))
   
 @app.route("/remove<string:index>")
 def remove(index):
@@ -91,7 +117,7 @@ def remove(index):
         return redirect('/users')
     elif db.deleteMachine(index,'1337hax'):
         print 'machines'
-        return redirect('/users')
+        return redirect('/machines')
     return "<h1>Ooops!</h1>"
         
 
@@ -121,6 +147,20 @@ def getLogList():
     except:
         log = [{'message':'There has been no activity ever'}]
         return logList
+
+@app.route("/machine-init", methods=['POST'])
+def machine_init():
+    print request.method
+    print request.form['ident']
+    if request.method == "POST":
+        machine = db.readMachine(request.form['ident'])
+        timeout = machine['timeout']
+        classes = machine['classes']
+        response = jsonify(timeout=timeout,classes=classes)
+        return response
+    return 'Request did not POST'
+	
+
 
 @app.route("/login")
 def login():
