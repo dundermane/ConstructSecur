@@ -67,6 +67,7 @@ def add_user():
         new['last'] = last
     except:
         print 'no last in form'
+    ##log ADDED USER xxx on XXXX
     added = db.addUser(new,'1337hax')
     return redirect(url_for('users'))
     
@@ -75,6 +76,7 @@ def user_class():
     ident = request.form['ident']
     userClass = db.readUser(ident)['class']
     print "user class is {0}".format(userClass)
+    ##log LOGIN ATTEMPT by XXXX at XXXX
     return jsonify(userClass=userClass)
   
 @app.route("/machines")
@@ -107,6 +109,7 @@ def add_machine():
         print 'no last in form'
     print new
     added = db.addMachine(new,'1337hax')
+    ##log ADD machine XXXX at XXXX
     return redirect(url_for('machines'))
   
 @app.route("/remove<string:index>")
@@ -157,6 +160,7 @@ def machine_init():
         timeout = machine['timeout']
         classes = machine['classes']
         response = jsonify(timeout=timeout,classes=classes)
+        ##log "machine XXXX checked in at XXXXX"
         return response
     return 'Request did not POST'
 	
